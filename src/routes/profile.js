@@ -1,4 +1,3 @@
-// import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import { updateProfile } from "firebase/auth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -11,17 +10,17 @@ export default function Profile({ userObj, refreshUser }) {
     authService.signOut();
     navigate("/");
   };
-  console.log(userObj.displayName, newDisplayName);
   const onChange = (e) => {
     const {
       target: { value },
     } = e;
     setNewDisplayName(value);
+    console.log(userObj);
   };
   const onSubmit = async (e) => {
     e.preventDefault();
     if (userObj.displayName !== newDisplayName) {
-      await updateProfile({ displayName: newDisplayName });
+      await updateProfile(userObj, { displayName: newDisplayName });
       refreshUser();
     }
   };
