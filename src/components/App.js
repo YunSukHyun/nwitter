@@ -4,15 +4,12 @@ import Router from "./router";
 
 function App() {
   const [init, setInit] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userObj, setUserObj] = useState(null);
   const refreshUser = () => {
-    // setUserObj(authService.currentUser);
     const user = authService.currentUser;
     setUserObj({
       uid: user.uid,
       displayName: user.displayName,
-      updateProfile: (args) => user.updateProfile(args),
     });
   };
   useEffect(() => {
@@ -21,10 +18,9 @@ function App() {
         setUserObj({
           uid: user.uid,
           displayName: user.displayName,
-          updateProfile: (args) => user.updateProfile(args),
         });
       } else {
-        setIsLoggedIn(false);
+        setUserObj(false);
       }
       setInit(true);
     });

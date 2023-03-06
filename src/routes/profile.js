@@ -15,12 +15,13 @@ export default function Profile({ userObj, refreshUser }) {
       target: { value },
     } = e;
     setNewDisplayName(value);
-    console.log(userObj);
   };
   const onSubmit = async (e) => {
     e.preventDefault();
     if (userObj.displayName !== newDisplayName) {
-      await updateProfile(userObj, { displayName: newDisplayName });
+      await updateProfile(authService.currentUser, {
+        displayName: newDisplayName,
+      });
       refreshUser();
     }
   };
@@ -39,17 +40,26 @@ export default function Profile({ userObj, refreshUser }) {
   // });
 
   return (
-    <>
-      <form onSubmit={onSubmit}>
+    <div className="container router">
+      <form onSubmit={onSubmit} className="profileForm">
         <input
           onChange={onChange}
           value={newDisplayName || ""}
           type="text"
           placeholder="Display name"
+          autoFocus
+          className="formInput"
         />
-        <input type="submit" value="Update Profile" />
+        <input
+          type="submit"
+          value="Update Profile"
+          className="formBtn"
+          style={{ marginTop: 10 }}
+        />
       </form>
-      <button onClick={onLogOutClick}>Log out</button>
-    </>
+      <span onClick={onLogOutClick} className="formBtn cancelBtn logOut">
+        Log out
+      </span>
+    </div>
   );
 }
